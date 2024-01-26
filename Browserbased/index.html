@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegan Life Challenge</title>
+    <!-- Bootstrap CSS link -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        .game-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #image-box {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        #typewriter-prompt {
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 1px solid #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .options-btn {
+            width: 100px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <!-- Level 1: Welcome Message -->
+        <h1>Welcome to Vegan Life Challenge</h1>
+        <p>Get ready for an exciting vegan adventure! Click 'Start' to begin.</p>
+        <button id="start-button" class="btn btn-primary" onclick="startGame()">Start</button>
+    </div>
+
+    <div class="game-container" id="level2-container" style="display: none;">
+        <!-- Level 2: Game Play -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Vegan_dish_%2842019058960%29.jpg/1280px-Vegan_dish_%2842019058960%29.jpg" alt="Game Image" id="image-box">
+        <p id="typewriter-prompt"></p>
+        <p>Question: What will you choose?</p>
+        <div id="options-container">
+            <button class="btn btn-secondary options-btn" onclick="chooseOption(1)">Option 1</button>
+            <button class="btn btn-secondary options-btn" onclick="chooseOption(2)">Option 2</button>
+            <button class="btn btn-secondary options-btn" onclick="chooseOption(3)">Option 3</button>
+            <button class="btn btn-secondary options-btn" onclick="chooseOption(4)">Option 4</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	
+    <script>
+	const image_source = ['https://en.wikipedia.org/wiki/Veganism#/media/File:Vegan_Plate.svg',
+	'https://en.wikipedia.org/wiki/Veganism#/media/File:Granola_oatmeal_with_soymilk_flickr_user_daisybush.jpg',
+	'https://en.wikipedia.org/wiki/Veganism#/media/File:Marsz_Wyzwolenia_Zwierzat_-_Go_Vegan.jpg'
+	
+	]
+	
+        const prompts = [
+            "Get ready for the Vegan Life Challenge!",
+            "Your journey begins now...",
+            "Now, let's ask a question...",
+            // Add more prompts as needed
+        ];
+
+        let currentPromptIndex = 0;
+
+        function startGame() {
+            document.getElementById('level2-container').style.display = 'block';
+			document.getElementById('start-button').style.display='none';
+            displayPrompt();
+        }
+
+        function displayPrompt() {
+            const promptElement = document.getElementById('typewriter-prompt');
+            promptElement.innerHTML = '';
+			//document.getElementById('image-box').src = image_source[currentPromptIndex];
+
+            const currentPrompt = prompts[currentPromptIndex];
+            let index = 0;
+
+            function typeWriter() {
+                if (index < currentPrompt.length) {
+                    promptElement.innerHTML += currentPrompt.charAt(index);
+                    index++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+
+            typeWriter();
+            currentPromptIndex++;
+        }
+
+        function chooseOption(optionNumber) {
+            // Handle the logic for each option
+            // For example, update the image, change the prompt, etc.
+
+            // After handling the option, display the next prompt
+            displayPrompt();
+        }
+    </script>
+
+    <!-- Bootstrap JS and Popper.js scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
