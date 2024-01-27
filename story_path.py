@@ -20,7 +20,7 @@ df = node_info[all_cols]
 df = df[df['Neighbor1'].notna()]
 main_nodes = df['NodeName'].unique()
 
-G=nx.MultiGraph ()
+G=nx.MultiDiGraph ()
 
 for mn in main_nodes:
     ls = df.loc[df['NodeName']==mn].values.tolist()[0]
