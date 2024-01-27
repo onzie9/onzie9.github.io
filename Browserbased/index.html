@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vegan Life Challenge</title>
     <!-- Bootstrap CSS link -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Comfortaa', sans-serif;
             background-color: #f8f9fa;
             text-align: center;
             padding: 20px;
         }
         .game-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
         }
         #image-box {
@@ -34,6 +35,29 @@
             width: 100px;
             margin: 10px;
         }
+		
+		#optionsTable {
+		  border-collapse: collapse;
+		  width: 100%;
+		  margin: auto;
+		}
+
+		#optionsTable td, #optionsTable th {
+		  border: 1px solid #ddd;
+		  padding: 8px;
+		}
+
+		#optionsTable tr:nth-child(even){background-color: #f2f2f2;}
+
+		#optionsTable tr:hover {background-color: #ddd;}
+
+		#optionsTable th {
+		  padding-top: 12px;
+		  padding-bottom: 12px;
+		  text-align: left;
+		  background-color: #04AA6D;
+		  color: white;
+		}
     </style>
 </head>
 <body>
@@ -42,22 +66,43 @@
         <!-- Level 1: Welcome Message -->
         <h1>Welcome to Vegan Life Challenge</h1>
         <p>Get ready for an exciting vegan adventure! Click 'Start' to begin.</p>
-        <button id="initiate-button" class="btn btn-primary" onclick="handleAuthClick()">Connect To Dataset</button> </br>
+        <button id="initiate-button" class="btn btn-primary" onclick="handleAuthClick()">Connect</button> </br>
         <button id="start-button" class="btn btn-primary" onclick="startGame()">Start</button>
     </div>
 
     <div class="game-container" id="level2-container" style="display: none;">
         <!-- Level 2: Game Play -->
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Vegan_dish_%2842019058960%29.jpg/1280px-Vegan_dish_%2842019058960%29.jpg" alt="Game Image" id="image-box">
-        <p id="typewriter-prompt"></p>
+        <p id="typewriter-prompt" style="white-space: pre-line;"></p>
         <p>Question: What will you choose?</p>
-        <div id="options-container">
-            <p> <span id="option1"> placeholder </span> <button class="btn btn-secondary options-btn" onclick="chooseOption(1)">Choose</button></p>
-            <p> <span id="option2"> placeholder </span> <button class="btn btn-secondary options-btn" onclick="chooseOption(2)">Choose</button></p>
-            <p> <span id="option3"> placeholder </span> <button class="btn btn-secondary options-btn" onclick="chooseOption(3)">Choose</button></p>
-            <p> <span id="option4"> placeholder </span> <button class="btn btn-secondary options-btn" onclick="chooseOption(4)">Choose</button></p>
-        </div>
+		<div id="options-container">
+       
+		<table id="optionsTable">
+		  <tr>
+			<th></th>
+			<th></th>
+		  </tr>
+		  <tr>
+			<td><span id="option1"> placeholder </span></td>
+			<td><button class="btn btn-secondary options-btn" onclick="chooseOption(1)">Choose</button></td>
+		  </tr>
+		  <tr>
+			<td><span id="option2"> placeholder </span></td>
+			<td><button class="btn btn-secondary options-btn" onclick="chooseOption(2)">Choose</button></td>
+		  </tr>
+		  <tr>
+			<td><span id="option3"> placeholder </span></td>
+			<td><button class="btn btn-secondary options-btn" onclick="chooseOption(3)">Choose</button></td>
+		  </tr>
+		  <tr>
+			<td><span id="option4"> placeholder </span></td>
+			<td><button class="btn btn-secondary options-btn" onclick="chooseOption(4)">Choose</button></td>
+		  </tr>
+		</table>
+	  </div>
     </div>
+	
+	
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	
