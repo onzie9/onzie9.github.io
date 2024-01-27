@@ -1,7 +1,13 @@
-import pandas as pd
+from functions import *
+
 import networkx as nx
 import matplotlib.pyplot as plt
+from IPython.display import Image
+import pandas as pd
 from collections import Counter
+import io
+import matplotlib.image as mpimg
+
 
 node_info = pd.read_csv("Nodes - Sheet1.csv")
 
@@ -14,23 +20,33 @@ df = node_info[all_cols]
 df = df[df['Neighbor1'].notna()]
 main_nodes = df['NodeName'].unique()
 
-print(df.loc[df['NodeName']=='Tier0.1'])
-ls = df.loc[df['NodeName']=='Tier0.1'].values.tolist()[0]
-print(ls)
-ls.pop(0)
-print(ls)
-G = nx.MultiDiGraph()
-for mn in main_nodes:
-    G.add_node(mn)
+G=nx.MultiGraph ()
+
 for mn in main_nodes:
     ls = df.loc[df['NodeName']==mn].values.tolist()[0]
     ls.pop(0)
     counts = Counter(ls)
     for i in range(len(ls)):
         if isinstance(ls[i], str) and 'Tier' in ls[i]:
-            G.add_edge(mn, ls[i], length=counts[ls[i]]/(i+1))
+            G.add_edge(mn, ls[i])
 
+node_label = nx.get_node_attributes(G,'id')
+pos = nx.spring_layout(G)
+node_label = nx.get_node_attributes(G,'id')
+pos = nx.spring_layout(G)
+p=nx.drawing.nx_pydot.to_pydot(G)
+# render the `pydot` by calling `dot`, no file saved to disk
+png_str = p.create_png(prog='dot')
 
-nx.draw(G, with_labels=True, connectionstyle='arc3, rad = 0.1')
+# treat the DOT output as an image file
+sio = io.BytesIO()
+sio.write(png_str)
+sio.seek(0)
+img = mpimg.imread(sio)
+
+# plot the image
+imgplot = plt.imshow(img, aspect='equal')
 plt.show()
+p.write_png('multi.png')
 
+Image(filename='multi.png')
