@@ -1,161 +1,213 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vegan Life Challenge</title>
-    <!-- Bootstrap CSS link -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            text-align: center;
-            padding: 20px;
-        }
-        .game-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        #image-box {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-        }
-        #typewriter-prompt {
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 1px solid #333;
-            margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .options-btn {
-            width: 100px;
-            margin: 10px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="game-container">
-        <!-- Level 1: Welcome Message -->
-        <h1>Welcome to Vegan Life Challenge</h1>
-        <p>Get ready for an exciting vegan adventure! Click 'Start' to begin.</p>
-        <button id="initiate-button" class="btn btn-primary" onclick="handleAuthClick()">Connect To Dataset</button> </br>
-        <button id="start-button" class="btn btn-primary" onclick="startGame()">Start</button>
-    </div>
-
-    <div class="game-container" id="level2-container" style="display: none;">
-        <!-- Level 2: Game Play -->
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Vegan_dish_%2842019058960%29.jpg/1280px-Vegan_dish_%2842019058960%29.jpg" alt="Game Image" id="image-box">
-        <p id="typewriter-prompt"></p>
-        <p>Question: What will you choose?</p>
-        <div id="options-container">
-            <p> <span id="option1"> placeholder </span> <button class="btn btn-secondary options-btn" onclick="chooseOption(1)">Choose</button></p>
-            <p> <span id="option2"> placeholder </span> <button class="btn btn-secondary options-btn" onclick="chooseOption(2)">Choose</button></p>
-            <p> <span id="option3"> placeholder </span> <button class="btn btn-secondary options-btn" onclick="chooseOption(3)">Choose</button></p>
-            <p> <span id="option4"> placeholder </span> <button class="btn btn-secondary options-btn" onclick="chooseOption(4)">Choose</button></p>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	
-    <script>
-    document.getElementById('start-button').style.visibility = 'hidden';
-	
-	const image_source = ['https://en.wikipedia.org/wiki/Veganism#/media/File:Vegan_Plate.svg',
-	'https://en.wikipedia.org/wiki/Veganism#/media/File:Granola_oatmeal_with_soymilk_flickr_user_daisybush.jpg',
-	'https://en.wikipedia.org/wiki/Veganism#/media/File:Marsz_Wyzwolenia_Zwierzat_-_Go_Vegan.jpg'
-	
-	]
-	
-        const prompts = [
-            "Get ready for the Vegan Life Challenge!",
-            "Your journey begins now...",
-            "Now, let's ask a question...",
-            // Add more prompts as needed
-        ];
-
-        let currentPromptIndex = 0;
-
-        function startGame() {
-            document.getElementById('level2-container').style.display = 'block';
-			document.getElementById('start-button').style.display='none';
-			handleAuthClick();
-            displayPrompt('Tier0.1');
-        }
-
-		// This is going to be populated on each question.
-		var rowValues = null;
-
-        function displayPrompt(nodeName) {
-            const promptElement = document.getElementById('typewriter-prompt');
-            promptElement.innerHTML = '';
-			//document.getElementById('image-box').src = image_source[currentPromptIndex];
-			
-			rowValues = findRowByText(nodeName);
-
-            //const currentPrompt = prompts[currentPromptIndex];
-            const currentPrompt = rowValues[1];
-
-            showThePrompt(promptElement, currentPrompt);
-			
-			// Show options 
-			showOptionText(1, 4);
-			showOptionText(2, 6);
-			showOptionText(3, 8);
-			showOptionText(4, 10);
-			
-            currentPromptIndex++;
-        }
-
-        function chooseOption(OptionNum) {
-            // Handle the logic for each option
-            // For example, update the image, change the prompt, etc.
-			
-			var optionTextId = 'option' + OptionNum;
-			var htmlElement = document.getElementById(optionTextId);
-			
-			var neighborNode = htmlElement.getAttribute("neighborNode")
-
-            // After handling the option, display the next prompt
-            displayPrompt(neighborNode);
-        }
-		
-		function showThePrompt(htmlElement, textToType){
-				let index = 0;
-				
-				function typeWriter(){
-					if (index < textToType.length) {
-						htmlElement.innerHTML += textToType.charAt(index);
-						index++;
-						setTimeout(typeWriter, 50);
-					}
-				}
-				
-				typeWriter();
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vegan Life Challenge</title>
+        <!-- Bootstrap CSS link -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <script src="./googleSheetConnection.js"></script>
+        <style>
+            body {
+                font-family: 'Comfortaa', sans-serif;
+                background-color: #f8f9fa;
+                text-align: center;
+                padding: 20px;
             }
-			
-		function showOptionText(OptionNum, columnIndexNum){
-			var optionTextId = 'option' + OptionNum;
-			var htmlElement = document.getElementById(optionTextId);
-			var newHTML = rowValues[columnIndexNum];
-			//newHTML = newHTML.replace('placeholder',rowValues[columnIndexNum]);
-			htmlElement.innerHTML = newHTML;
-			
-			// set the neighbour attribute on option, so as to access it once we click on choose button
-			htmlElement.setAttribute("neighborNode", rowValues[columnIndexNum+1])
-		}
-    </script>
-    <!-- Bootstrap JS and Popper.js scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	
-	<!-- Google Sheets -->
-    <script src="./googleSheetConnection.js"></script>
-	<script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+            .game-container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+           .image-box {
+                max-width: 50%;
+                height: auto;
+                margin:auto;
+				padding: 20px;
+            }
+            #typewriter-prompt {
+                white-space: nowrap;
+                overflow: hidden;
+                border-right: 1px solid #333;
+                margin-bottom: 20px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .options-btn {
+                width: 100px;
+                margin: 10px;
+            }
 
-</body>
-</html>
+            #start-button {
+            margin: auto;
+            }
+            
+            #optionsTable {
+            border-collapse: collapse;
+            width: 100%;
+            margin: auto;
+            }
+
+            #optionsTable td, #optionsTable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            }
+
+            #optionsTable tr:nth-child(even){background-color: #f2f2f2;}
+
+            #optionsTable tr:hover {background-color: #ddd;}
+
+            #optionsTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="game-container">
+            <!-- Level 1: Welcome Message -->
+            <h1>Welcome to Vegan Life Challenge</h1>
+            <p>Get ready for an exciting vegan adventure! Click 'Start' to begin.</p>
+            <button id="initiate-button" class="btn btn-primary" onclick="handleAuthClick()">Connect</button>
+            <button id="start-button" class="btn btn-primary" onclick="startGame()">Start</button>
+			
+        </div>
+
+        <div class="game-container" id="level2-container" style="display: none;">
+            <!-- Level 2: Game Play -->
+            <img src="/images/Tier6.jpeg" class="img-fluid" alt="Responsive image" id="image-box"></br></br>
+            <!-- <img src="/images/Tier_6.1.jpeg" alt="Game Image" id="image-box"></br> -->
+            <p id="typewriter-prompt" style="white-space: pre-line;"></p>
+            <p>Question: What will you choose?</p>
+            <div id="options-container">
+        
+            <table id="optionsTable">
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td><span id="option1"> placeholder </span></td>
+                <td><button class="btn btn-secondary options-btn" onclick="chooseOption(1)">Choose</button></td>
+            </tr>
+            <tr>
+                <td><span id="option2"> placeholder </span></td>
+                <td><button class="btn btn-secondary options-btn" onclick="chooseOption(2)">Choose</button></td>
+            </tr>
+            <tr>
+                <td><span id="option3"> placeholder </span></td>
+                <td><button class="btn btn-secondary options-btn" onclick="chooseOption(3)">Choose</button></td>
+            </tr>
+            <tr>
+                <td><span id="option4"> placeholder </span></td>
+                <td><button class="btn btn-secondary options-btn" onclick="chooseOption(4)">Choose</button></td>
+            </tr>
+            </table>
+        </div>
+        </div>
+        
+        
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        
+        <script>
+        document.getElementById('start-button').style.display = 'none';
+        
+        const image_source = [
+			'/images/Tier1.jpeg',
+        	'/images/Tier5.jpeg',
+        	'/images/Tier6.jpeg'
+        ]
+        
+            const prompts = [
+                "Get ready for the Vegan Life Challenge!",
+                "Your journey begins now...",
+                "Now, let's ask a question...",
+                // Add more prompts as needed
+            ];
+
+            let currentPromptIndex = 0;
+
+            function startGame() {
+                document.getElementById('level2-container').style.display = 'block';
+                document.getElementById('start-button').style.display = 'none';
+				document.getElementById('image-box').style.display = 'none';
+                displayPrompt('Tier0.1');
+            }
+
+            // This is going to be populated on each question.
+            var rowValues = null;
+
+            function displayPrompt(nodeName) {
+                const promptElement = document.getElementById('typewriter-prompt');
+                promptElement.innerHTML = '';
+                document.getElementById('image-box').src = image_source[currentPromptIndex];
+                
+                rowValues = findRowByText(nodeName);
+
+                //const currentPrompt = prompts[currentPromptIndex];
+                const currentPrompt = rowValues[1];
+
+                showThePrompt(promptElement, currentPrompt);
+                
+                // Show options 
+                showOptionText(1, 4);
+                showOptionText(2, 6);
+                showOptionText(3, 8);
+                showOptionText(4, 10);
+                
+                currentPromptIndex++;
+            }
+
+            function chooseOption(OptionNum) {
+                // Handle the logic for each option
+                // For example, update the image, change the prompt, etc.
+                
+                var optionTextId = 'option' + OptionNum;
+                var htmlElement = document.getElementById(optionTextId);
+                
+                var neighborNode = htmlElement.getAttribute("neighborNode")
+
+                // After handling the option, display the next prompt
+                displayPrompt(neighborNode);
+            }
+            
+            function showThePrompt(htmlElement, textToType){
+                    let index = 0;
+                    
+                    function typeWriter(){
+                        if (index < textToType.length) {
+                            htmlElement.innerHTML += textToType.charAt(index);
+                            index++;
+                            setTimeout(typeWriter, 50);
+                        }
+                    }
+                    
+                    typeWriter();
+                }
+                
+            function showOptionText(OptionNum, columnIndexNum){
+                var optionTextId = 'option' + OptionNum;
+                var htmlElement = document.getElementById(optionTextId);
+                var newHTML = rowValues[columnIndexNum];
+                //newHTML = newHTML.replace('placeholder',rowValues[columnIndexNum]);
+                htmlElement.innerHTML = newHTML;
+                
+                // set the neighbour attribute on option, so as to access it once we click on choose button
+                htmlElement.setAttribute("neighborNode", rowValues[columnIndexNum+1])
+            }
+        </script>
+        <!-- Bootstrap JS and Popper.js scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+        <!-- Google Sheets -->
+        <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+        <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+
+    </body>
+    </html>
