@@ -80,7 +80,7 @@
                 document.getElementById('initiate-button').style.display = 'none';
                 loadTheSheetValuesForSheet1();
                 loadTheSheetValuesForSheetCutText();
-                loadTheSheetValuesForSheetTopText();
+                loadTheSheetValuesForSheetTopText(); // This sheet contains top texts and equivalent image names
               };
 
               if (gapi.client.getToken() === null) {
