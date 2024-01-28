@@ -40,7 +40,7 @@
 
                                 // Change the Top Image
                                 if(document.getElementById('image-box')){
-                                    image_path = '/images/' + topTextRowValue[2];
+                                    image_path = '/Images/' + topTextRowValue[2];
                                     document.getElementById('image-box').src = image_path;
                                     slowFadeIn('image-box');
                                 }
