@@ -24,8 +24,8 @@
                     #image-box {
                         max-width: 40vh;
                         height: auto;
-                        margin:10px;
-                        padding: 10px;
+                        margin:2px;
+                        padding:2px;
                     }
                     #typewriter-prompt {
                         white-space: nowrap;
@@ -73,7 +73,7 @@
                 <div class="game-container" style="height: auto">
                     <!-- Level 1: Welcome Message -->
                     <h1>Welcome to your Vegan Life Challenge</h1>
-                    <p>Get ready for an exciting vegan adventure! Click 'Connect' to Start.</p>
+                    <p>Click 'Connect' to Start.</p>
                         <button id="initiate-button" class="btn btn-primary" onclick="handleAuthClick()">Connect</button>
                         <button id="start-button" class="btn btn-primary" onclick="startGame()">Start</button> </br>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/002-soymilk.jpg/1280px-002-soymilk.jpg"  alt="Responsive image" id="image-box"></br></br>
@@ -84,8 +84,6 @@
                 <div class="game-container" id="level2-container" style="display: none;">
                     <!-- Level 2: Game Play -->
                     <p id="tier-overall" style="white-space: pre-line; color:DodgerBlue; font-size: medium;"></p>
-
-                    <!-- <img src="/images/Tier_6.1.jpeg" alt="Game Image" id="image-box"></br> -->
                     <p id="typewriter-prompt" style="white-space: pre-line;"></p>
                     <p>Question: What will you choose?</p>
                     <div id="options-container">
@@ -97,19 +95,19 @@
                         </tr>
                         <tr>
                             <td><span id="option1"> placeholder </span></td>
-                            <td><button class="btn btn-primary options-btn" onclick="chooseOptionBtnClick(1)">Choose</button></td>
+                            <td><button class="btn btn-primary options-btn btn-sm" onclick="chooseOptionBtnClick(1)">Choose</button></td>
                         </tr>
                         <tr>
                             <td><span id="option2"> placeholder </span></td>
-                            <td><button class="btn btn-primary options-btn" onclick="chooseOptionBtnClick(2)">Choose</button></td>
+                            <td><button class="btn btn-primary options-btn btn-sm" onclick="chooseOptionBtnClick(2)">Choose</button></td>
                         </tr>
                         <tr>
                             <td><span id="option3"> placeholder </span></td>
-                            <td><button class="btn btn-primary options-btn" onclick="chooseOptionBtnClick(3)">Choose</button></td>
+                            <td><button class="btn btn-primary options-btn btn-sm" onclick="chooseOptionBtnClick(3)">Choose</button></td>
                         </tr>
                         <tr>
                             <td><span id="option4"> placeholder </span></td>
-                            <td><button class="btn btn-primary options-btn" onclick="chooseOptionBtnClick(4)">Choose</button></td>
+                            <td><button class="btn btn-primary options-btn btn-sm" onclick="chooseOptionBtnClick(4)">Choose</button></td>
                         </tr>
                         </table>
                 </div>
