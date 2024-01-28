@@ -4,7 +4,7 @@
                     var currentNodeValue = null;
 
                     const image_source = [
-                        '/images/Tier1.jpeg',
+                        '/images/Tier1.png',
                         '/images/Tier5.jpeg',
                         '/images/Tier6.jpeg'
                     ]
@@ -20,7 +20,9 @@
                         function startGame() {
                             document.getElementById('level2-container').style.display = 'block';
                             document.getElementById('start-button').style.display = 'none';
-                            document.getElementById('image-box').style.display = 'none';
+                            if(document.getElementById('image-box')){
+                                document.getElementById('image-box').style.display = 'visible';
+                            }
                             displayScenario('Tier0.1');
                         }
 
@@ -30,7 +32,9 @@
 
                             const promptElement = document.getElementById('typewriter-prompt');
                             promptElement.innerHTML = '';
-                            //document.getElementById('image-box').src = image_source[currentPromptIndex];
+                            if(document.getElementById('image-box')){
+                                document.getElementById('image-box').src = image_source[currentPromptIndex];
+                            }
                             
                             rowValues = findRowByText(currentNodeValue, sheet1Values);
 
