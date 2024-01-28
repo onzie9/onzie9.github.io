@@ -12,15 +12,17 @@
 
 
                             function startGame() {
-                                document.getElementById('level2-container').style.display = 'block';
+                                document.getElementById('level2-container').style.display = 'inline';
                                 document.getElementById('start-button').style.display = 'none';
                                 if(document.getElementById('image-box')){
-                                    document.getElementById('image-box').style.display = 'visible';
+                                    document.getElementById('image-box').style.display = 'inline';
                                 }
                                 displayScenario('Tier0.1');
                             }
 
                             function displayScenario(nodeName) {
+                                // Hide the options table first
+                                document.getElementById('optionsTable').style.display = 'none';
                                 // Set current Value Node first.
                                 currentNodeValue = nodeName;
 
@@ -43,14 +45,17 @@
 
                                 const currentPrompt = rowValues[1];
 
-                                showThePrompt(promptElement, currentPrompt);
+                                let delayedPromise = showThePrompt(promptElement, currentPrompt);
                                 
-                                // Show options 
-                                showOptionText(1, 4);
-                                showOptionText(2, 6);
-                                showOptionText(3, 8);
-                                showOptionText(4, 10);
-                                
+                                // Show options after prompt is displayed fully
+                                delayedPromise.then(()=>{ 
+                                    // Show the options table
+                                    document.getElementById('optionsTable').style.display = 'inline';
+                                    showOptionText(1, 4);
+                                    showOptionText(2, 6);
+                                    showOptionText(3, 8);
+                                    showOptionText(4, 10);
+                                });                                
                             }
 
                             function chooseOptionBtnClick(OptionNum) {
@@ -68,26 +73,33 @@
                                 var cutTextValueRow = findRowByText(currentNodeValue, sheetCutTextsValues);
                                 var cutText = cutTextValueRow[OptionNum];
 
-                                showModal(cutText);
-                                //alert(cutText);
+                                let modalDonePromise = showModal(cutText);
 
-                                // After handling the option, display the next prompt
-                                displayScenario(neighborNode);
+                                // After handling the option, proceed to next scenario
+                                modalDonePromise.then(()=>
+                                    displayScenario(neighborNode));
                             }
                             
                             function showThePrompt(htmlElement, textToType){
                                     let index = 0;
-                                    
-                                    function typeWriter(){
-                                        if (index < textToType.length) {
-                                            htmlElement.innerHTML += textToType.charAt(index);
-                                            index++;
-                                            setTimeout(typeWriter, 50);
+                                    return new Promise((resolve, reject) => {
+                                        if(textToType == null || textToType.length == 0){
+                                            // A safety check. Resolve and move ahead
+                                            resolve();
                                         }
-                                    }
-                                    
+                                        function typeWriter(){
+                                            if (index < textToType.length) {
+                                                htmlElement.innerHTML += textToType.charAt(index);
+                                                index++;
+                                                setTimeout(typeWriter, 40);
+                                            }
+                                            else{
+                                                resolve();
+                                            }
+                                        }
                                     typeWriter();
-                                }
+                                    })
+                            }
                                 
                             function showOptionText(OptionNum, columnIndexNum){
                                 var optionTextId = 'option' + OptionNum;
@@ -102,11 +114,15 @@
 
                             // Showing popups in between
                             function showModal(messageToShow){
-                            $('#exampleModal').modal('show');
-                            $('#modal-body-id')[0].innerHTML = messageToShow;
-                            
-                            // Set a timeout to close the modal after 3 seconds (adjust the time as needed)
-                            setTimeout(function(){
-                                $('#exampleModal').modal('hide');
-                            }, 5000);
+                                $('#exampleModal').modal('show');
+                                $('#modal-body-id')[0].innerHTML = messageToShow;
+                                
+                                // Set a timeout to close the modal after 3 seconds (adjust the time as needed)
+                                return new Promise((resolve, reject) => {
+                                    setTimeout(function(){
+                                        $('#exampleModal').modal('hide');
+                                        resolve();
+                                    }, 4000);
+                                });
+                                
                             };
