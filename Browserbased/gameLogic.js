@@ -16,12 +16,12 @@
                                 document.getElementById('start-button').style.display = 'none';
                                 if(document.getElementById('image-box')){
                                     document.getElementById('image-box').style.display = 'inline';
+                                    slowFadeIn('image-box');
                                 }
                                 displayScenario('Tier0.1');
                             }
 
                             function displayScenario(nodeName) {
-                                // Hide the options table first
                                 document.getElementById('optionsTable').style.display = 'none';
                                 // Set current Value Node first.
                                 currentNodeValue = nodeName;
@@ -36,11 +36,13 @@
                                 topTextRowValue = findRowByText(currentNodeValue, sheetTopTextValues);
                                 //assert(topTextRowValue == null, 'Some Problem in TopText Sheet');
                                 tierOverallPromptElement.innerHTML = topTextRowValue[1];
+                                slowFadeIn('tier-overall');
 
                                 // Change the Top Image
                                 if(document.getElementById('image-box')){
                                     image_path = '/images/' + topTextRowValue[2];
                                     document.getElementById('image-box').src = image_path;
+                                    slowFadeIn('image-box');
                                 }
 
                                 const currentPrompt = rowValues[1];
@@ -51,6 +53,8 @@
                                 delayedPromise.then(()=>{ 
                                     // Show the options table
                                     document.getElementById('optionsTable').style.display = 'inline';
+                                    slowFadeIn('optionsTable')
+
                                     showOptionText(1, 4);
                                     showOptionText(2, 6);
                                     showOptionText(3, 8);
@@ -126,3 +130,16 @@
                                 });
                                 
                             };
+
+                            function slowFadeIn(htmlElementId){
+                                var htmlElement = document.getElementById(htmlElementId);
+                                let opacity = 0.0;
+                                function changeOpacity(){
+                                    if (opacity <= 1.0) {
+                                        htmlElement.style.opacity = opacity;
+                                        opacity+= 0.1;
+                                        setTimeout(changeOpacity, 50);
+                                    }
+                                }
+                                changeOpacity();
+                            }
