@@ -21,11 +21,11 @@
                         max-width: 800px;
                         margin: 0 auto;
                     }
-                .image-box {
-                        max-width: 50%;
+                    #image-box {
+                        max-width: 25vw;
                         height: auto;
-                        margin:auto;
-                        padding: 20px;
+                        margin:10px;
+                        padding: 10px;
                     }
                     #typewriter-prompt {
                         white-space: nowrap;
@@ -70,18 +70,19 @@
             </head>
             <body>
 
-                <div class="game-container">
+                <div class="game-container" style="height: auto">
                     <!-- Level 1: Welcome Message -->
                     <h1>Welcome to Vegan Life Challenge</h1>
-                    <p>Get ready for an exciting vegan adventure! Click 'Start' to begin.</p>
-                    <button id="initiate-button" class="btn btn-primary" onclick="handleAuthClick()">Connect</button>
-                    <button id="start-button" class="btn btn-primary" onclick="startGame()">Start</button>
-                    
+                    <p>Get ready for an exciting vegan adventure! Click 'Connect' to Start.</p>
+                        <button id="initiate-button" class="btn btn-primary" onclick="handleAuthClick()">Connect</button>
+                        <button id="start-button" class="btn btn-primary" onclick="startGame()">Start</button> </br>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/002-soymilk.jpg/1280px-002-soymilk.jpg"  alt="Responsive image" id="image-box"></br></br>
+                </div>
+
                 </div>
 
                 <div class="game-container" id="level2-container" style="display: none;">
                     <!-- Level 2: Game Play -->
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/002-soymilk.jpg/1280px-002-soymilk.jpg" class="img-fluid" alt="Responsive image" id="image-box"></br></br>
                     <p id="tier-overall" style="white-space: pre-line; color:DodgerBlue; font-size: medium;"></p>
 
                     <!-- <img src="/images/Tier_6.1.jpeg" alt="Game Image" id="image-box"></br> -->
