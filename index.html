@@ -1,0 +1,152 @@
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Vegan Life Challenge</title>
+                <!-- Bootstrap CSS link -->
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa">
+                <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                <script src="./googleSheetConnection.js"></script>
+                <script src="./gameLogic.js"></script>
+                <style>
+                    body {
+                        font-family: 'Comfortaa', sans-serif;
+                        background-color: #f8f9fa;
+                        text-align: center;
+                        padding: 20px;
+                    }
+                    .game-container {
+                        max-width: 800px;
+                        margin: 0 auto;
+                    }
+                    #image-box {
+                        max-width: 40vh;
+                        height: auto;
+                        margin:10px;
+                        padding: 10px;
+                    }
+                    #typewriter-prompt {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        border-right: 1px solid #333;
+                        margin-bottom: 20px;
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+                    .options-btn {
+                        width: 100px;
+                        margin: 10px;
+                    }
+
+                    #start-button {
+                    margin: auto;
+                    }
+                    
+                    #optionsTable {
+                    border-collapse: collapse;
+                    width: 100%;
+                    margin: auto;
+                    }
+
+                    #optionsTable td, #optionsTable th {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    }
+
+                    #optionsTable tr:nth-child(even){background-color: #f2f2f2;}
+
+                    #optionsTable tr:hover {background-color: #ddd;}
+
+                    #optionsTable th {
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    text-align: left;
+                    background-color: #04AA6D;
+                    color: white;
+                    }
+                </style>
+            </head>
+            <body>
+
+                <div class="game-container" style="height: auto">
+                    <!-- Level 1: Welcome Message -->
+                    <h1>Welcome to Vegan Life Challenge</h1>
+                    <p>Get ready for an exciting vegan adventure! Click 'Connect' to Start.</p>
+                        <button id="initiate-button" class="btn btn-primary" onclick="handleAuthClick()">Connect</button>
+                        <button id="start-button" class="btn btn-primary" onclick="startGame()">Start</button> </br>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/002-soymilk.jpg/1280px-002-soymilk.jpg"  alt="Responsive image" id="image-box"></br></br>
+                </div>
+
+                </div>
+
+                <div class="game-container" id="level2-container" style="display: none;">
+                    <!-- Level 2: Game Play -->
+                    <p id="tier-overall" style="white-space: pre-line; color:DodgerBlue; font-size: medium;"></p>
+
+                    <!-- <img src="/images/Tier_6.1.jpeg" alt="Game Image" id="image-box"></br> -->
+                    <p id="typewriter-prompt" style="white-space: pre-line;"></p>
+                    <p>Question: What will you choose?</p>
+                    <div id="options-container">
+                
+                        <table id="optionsTable">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td><span id="option1"> placeholder </span></td>
+                            <td><button class="btn btn-secondary options-btn" onclick="chooseOptionBtnClick(1)">Choose</button></td>
+                        </tr>
+                        <tr>
+                            <td><span id="option2"> placeholder </span></td>
+                            <td><button class="btn btn-secondary options-btn" onclick="chooseOptionBtnClick(2)">Choose</button></td>
+                        </tr>
+                        <tr>
+                            <td><span id="option3"> placeholder </span></td>
+                            <td><button class="btn btn-secondary options-btn" onclick="chooseOptionBtnClick(3)">Choose</button></td>
+                        </tr>
+                        <tr>
+                            <td><span id="option4"> placeholder </span></td>
+                            <td><button class="btn btn-secondary options-btn" onclick="chooseOptionBtnClick(4)">Choose</button></td>
+                        </tr>
+                        </table>
+                </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Good Choice Genius</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body" id="modal-body-id">
+                        <p>This is the message you want to show.</p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                
+                
+
+                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+                
+                <script>
+                document.getElementById('start-button').style.display = 'none';
+
+                </script>
+                <!-- Bootstrap JS and Popper.js scripts -->
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                
+                <!-- Google Sheets -->
+                <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+                <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+
+</body>
+</html>
